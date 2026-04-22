@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Idriss Bakayoko — DevOps Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Josefin+Sans:wght@300;400;600&family=EB+Garamond:ital@0;1&display=swap" rel="stylesheet">
+<style>
+
+  /* ── RESET & BASE ──────────────────────────────────── */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream:   #f5f0e8;
+    --parchment: #ede6d6;
+    --ink:     #1a1208;
+    --ink2:    #3d3020;
+    --rust:    #b84c1e;
+    --gold:    #c9973a;
+    --sage:    #4a6741;
+    --slate:   #2e3d4f;
+    --rule:    #c8b89a;
+    --faint:   #d4c9b4;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: 'EB Garamond', Georgia, serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Noise texture overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.6;
+  }
+
+  /* ── PAGE WRAPPER ──────────────────────────────────── */
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 40px 80px;
+  }
+
+  /* ── TOP RULE / MASTHEAD ───────────────────────────── */
+  .masthead {
+    padding-top: 52px;
+    text-align: center;
+    animation: riseIn 1s ease both;
+  }
+
+  .masthead-rule {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 28px;
+  }
+  .masthead-rule hr {
+    flex: 1;
+    border: none;
+    border-top: 1px solid var(--rule);
+  }
+  .masthead-rule .diamond {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  .kicker {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+  .kicker::before, .kicker::after {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--rust);
+    opacity: 0.4;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 9vw, 108px);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  h1 .first { display: block; }
+  h1 .last {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--ink);
+    font-style: italic;
+    font-weight: 700;
+  }
+
+  .role-line {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink2);
+    margin-top: 22px;
+    opacity: 0.7;
+  }
+
+  /* ── HORIZONTAL STATS BAR ──────────────────────────── */
+  .stats-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 40px 0 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 20px 0;
+    animation: riseIn 1s 0.15s ease both;
+  }
+  .stat-item {
+    flex: 1;
+    text-align: center;
+    padding: 0 20px;
+    border-right: 1px solid var(--faint);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--rust);
+    line-height: 1;
+  }
+  .stat-lbl {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink2);
+    opacity: 0.6;
+    margin-top: 5px;
+  }
+
+  /* ── SECTION HEADING ───────────────────────────────── */
+  .sec-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 56px 0 28px;
+  }
+  .sec-head .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--gold);
+  }
+  .sec-head h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .sec-head .rule {
+    flex: 1;
+    height: 1px;
+    background: var(--faint);
+  }
+
+  /* ── ABOUT BLOCK ───────────────────────────────────── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 2px 1fr;
+    gap: 40px;
+    animation: riseIn 1s 0.25s ease both;
+  }
+  .about-divider { background: var(--faint); }
+  .about-text {
+    font-size: 18px;
+    line-height: 1.75;
+    color: var(--ink2);
+  }
+  .about-text p + p { margin-top: 16px; }
+  .about-text em { color: var(--rust); font-style: italic; }
+  .about-text strong { font-weight: 700; color: var(--ink); }
+
+  .about-sidebar {}
+  .sidebar-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--faint);
+  }
+  .sidebar-item:first-child { border-top: 1px solid var(--faint); }
+  .sidebar-icon {
+    font-size: 18px;
+    line-height: 1;
+    margin-top: 2px;
+    width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .sidebar-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 3px;
+  }
+  .sidebar-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  /* ── TOOLS ─────────────────────────────────────────── */
+  .tools-section { animation: riseIn 1s 0.35s ease both; }
+
+  .tools-mosaic {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px;
+  }
+
+  .tool-tile {
+    background: var(--parchment);
+    border: 1px solid var(--faint);
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    cursor: default;
+    transition: all 0.3s cubic-bezier(.23,1,.32,1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tool-tile::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .tool-tile:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(26,18,8,0.1); border-color: var(--rule); }
+  .tool-tile:hover::before { transform: scaleX(1); }
+
+  /* accent colors per category */
+  .t-os::before    { background: var(--gold); }
+  .t-cloud::before { background: #ff9900; }
+  .t-iac::before   { background: var(--slate); }
+  .t-cont::before  { background: #2496ed; }
+  .t-ci::before    { background: var(--rust); }
+  .t-scm::before   { background: var(--sage); }
+  .t-qa::before    { background: var(--slate); }
+  .t-art::before   { background: var(--sage); }
+  .t-obs::before   { background: #632CA6; }
+
+  .tool-tile:hover.t-os    { background: #fdf5e0; }
+  .tool-tile:hover.t-cloud { background: #fff8ee; }
+  .tool-tile:hover.t-iac   { background: #eef1f5; }
+  .tool-tile:hover.t-cont  { background: #edf5ff; }
+  .tool-tile:hover.t-ci    { background: #fdf0ec; }
+  .tool-tile:hover.t-scm   { background: #eff4ee; }
+  .tool-tile:hover.t-qa    { background: #eef1f5; }
+  .tool-tile:hover.t-art   { background: #eff4ee; }
+  .tool-tile:hover.t-obs   { background: #f5eeff; }
+
+  .tool-emoji { font-size: 26px; }
+
+  /* SVG logo inside tool tile */
+  .tool-logo {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .tool-lbl {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 8.5px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink2);
+    text-align: center;
+    line-height: 1.3;
+    padding: 0 4px;
+  }
+
+  /* ── EDUCATION ─────────────────────────────────────── */
+  .edu-section { animation: riseIn 1s 0.38s ease both; }
+
+  .edu-list { display: flex; flex-direction: column; gap: 0; }
+
+  .edu-item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 24px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--faint);
+    position: relative;
+  }
+  .edu-item:first-child { border-top: 1px solid var(--faint); }
+
+  .edu-year {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--gold);
+    text-align: right;
+    padding-top: 3px;
+    line-height: 1.4;
+  }
+
+  .edu-body {}
+  .edu-degree {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .edu-school {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink2);
+    opacity: 0.65;
+  }
+  .edu-badge {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 3px 10px;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 8.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border: 1px solid var(--rust);
+    color: var(--rust);
+  }
+
+  /* ── PIPELINE ──────────────────────────────────────── */
+  .pipeline-section { animation: riseIn 1s 0.45s ease both; }
+
+  .pipeline-track {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    position: relative;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+  /* connector line */
+  .pipeline-track::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 28px;
+    right: 28px;
+    height: 1px;
+    background: var(--rule);
+    z-index: 0;
+  }
+
+  .pipe-node {
+    flex: 1;
+    min-width: 110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    z-index: 1;
+  }
+  .pipe-circle {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--parchment);
+    border: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(26,18,8,0.06);
+  }
+  .pipe-node:hover .pipe-circle {
+    background: var(--ink);
+    border-color: var(--ink);
+    transform: scale(1.12);
+    box-shadow: 0 8px 24px rgba(26,18,8,0.2);
+  }
+  .pipe-text { text-align: center; }
+  .pipe-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .pipe-sub {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink2);
+    opacity: 0.5;
+    line-height: 1.5;
+  }
+
+  .pipe-arrow {
+    align-self: center;
+    margin-top: -42px;
+    font-size: 12px;
+    color: var(--rule);
+    flex-shrink: 0;
+    min-width: 16px;
+    text-align: center;
+  }
+
+  /* ── SKILLS ────────────────────────────────────────── */
+  .skills-section { animation: riseIn 1s 0.55s ease both; }
+
+  .skills-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 60px;
+  }
+  .skill-entry { padding: 14px 0; border-bottom: 1px solid var(--faint); }
+  .skill-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+  }
+  .skill-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-style: italic;
+    color: var(--ink);
+  }
+  .skill-tag {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .skill-track {
+    height: 3px;
+    background: var(--faint);
+    position: relative;
+  }
+  .skill-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--rust), var(--gold));
+    transform-origin: left;
+    animation: barIn 1.4s cubic-bezier(.77,0,.18,1) both;
+  }
+  .skill-fill.d1 { animation-delay: 0.6s; }
+  .skill-fill.d2 { animation-delay: 0.7s; }
+  .skill-fill.d3 { animation-delay: 0.8s; }
+  .skill-fill.d4 { animation-delay: 0.9s; }
+  .skill-fill.d5 { animation-delay: 1.0s; }
+  .skill-fill.d6 { animation-delay: 1.1s; }
+  @keyframes barIn { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+  /* ── PULL QUOTE ────────────────────────────────────── */
+  .pull-quote {
+    margin: 64px 0 0;
+    padding: 40px 52px;
+    border-top: 3px double var(--rule);
+    border-bottom: 3px double var(--rule);
+    text-align: center;
+    animation: riseIn 1s 0.65s ease both;
+  }
+  .pull-quote blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 3.5vw, 30px);
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .pull-quote cite {
+    display: block;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-top: 16px;
+    font-style: normal;
+  }
+
+  /* ── CTA FOOTER ────────────────────────────────────── */
+  .cta-footer {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 32px;
+    padding: 44px 0 0;
+    border-top: 1px solid var(--rule);
+    margin-top: 56px;
+    animation: riseIn 1s 0.75s ease both;
+  }
+  .cta-text h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .cta-text h3 em { font-style: italic; color: var(--rust); }
+  .cta-text p {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink2);
+    opacity: 0.6;
+    margin-top: 8px;
+  }
+
+  .cta-btns { display: flex; flex-direction: column; gap: 10px; }
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 13px 28px;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    border: none;
+    white-space: nowrap;
+  }
+  .btn-filled {
+    background: var(--ink);
+    color: var(--cream);
+  }
+  .btn-filled:hover { background: var(--rust); }
+  .btn-ghost {
+    border: 1px solid var(--rule);
+    color: var(--ink2);
+    background: transparent;
+  }
+  .btn-ghost:hover { border-color: var(--ink); color: var(--ink); }
+
+  /* ── COLOPHON ──────────────────────────────────────── */
+  .colophon {
+    margin-top: 52px;
+    padding-top: 20px;
+    border-top: 1px solid var(--faint);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .colophon-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .colophon-mark {
+    width: 10px; height: 10px;
+    background: var(--rust);
+    transform: rotate(45deg);
+  }
+  .colophon-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--ink);
+  }
+  .colophon-right {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink2);
+    opacity: 0.5;
+  }
+
+  /* ── ANIMATIONS ────────────────────────────────────── */
+  @keyframes riseIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ────────────────────────────────────── */
+  @media (max-width: 720px) {
+    .page { padding: 0 20px 60px; }
+    .about-grid { grid-template-columns: 1fr; }
+    .about-divider { display: none; }
+    .tools-mosaic { grid-template-columns: repeat(4, 1fr); }
+    .skills-cols { grid-template-columns: 1fr; }
+    .cta-footer { grid-template-columns: 1fr; }
+    .cta-btns { flex-direction: row; }
+    .pipeline-track::before { display: none; }
+    .edu-item { grid-template-columns: 60px 1fr; gap: 14px; }
+  }
+  @media (max-width: 480px) {
+    .tools-mosaic { grid-template-columns: repeat(3, 1fr); }
+    .stats-strip { flex-wrap: wrap; }
+    .stat-item { min-width: 50%; border-right: none; border-bottom: 1px solid var(--faint); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ═══ MASTHEAD ═══ -->
+  <div class="masthead">
+    <div class="masthead-rule">
+      <hr><div class="diamond"></div><hr><div class="diamond"></div><hr>
+    </div>
+
+    <div class="kicker">DevOps Engineer &nbsp;·&nbsp; Cloud &amp; Automation</div>
+
+    <h1>
+      <span class="first">Idriss</span>
+      <span class="last">Bakayoko</span>
+    </h1>
+
+    <p class="role-line">Infrastructure as Code &nbsp;·&nbsp; CI/CD &nbsp;·&nbsp; Container Orchestration</p>
+
+    <div class="masthead-rule" style="margin-top:28px; margin-bottom:0;">
+      <hr><div class="diamond"></div><hr><div class="diamond"></div><hr>
+    </div>
+  </div>
+
+  <!-- ═══ STATS STRIP ═══ -->
+  <div class="stats-strip">
+    <div class="stat-item">
+      <div class="stat-num">3</div>
+      <div class="stat-lbl">Years of Experience</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">16+</div>
+      <div class="stat-lbl">Tools Mastered</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">∞</div>
+      <div class="stat-lbl">Deployments Shipped</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">0</div>
+      <div class="stat-lbl">Downtime Tolerance</div>
+    </div>
+  </div>
+
+  <!-- ═══ ABOUT ═══ -->
+  <div class="sec-head">
+    <span class="num">I.</span>
+    <h2>About</h2>
+    <div class="rule"></div>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        I am a <em>DevOps Engineer</em> with <strong>3 years of hands-on experience</strong> building, automating, and scaling modern cloud infrastructure. I bridge the gap between development velocity and operational reliability.
+      </p>
+      <p>
+        My work spans the full delivery lifecycle — from writing infrastructure as code with Terraform on AWS, to orchestrating containerised workloads in Kubernetes, to designing zero-downtime CI/CD pipelines with GitHub Actions and ArgoCD.
+      </p>
+      <p>
+        I believe <em>infrastructure should be versioned, repeatable, and boring</em> — so that the products running on top of it can be extraordinary.
+      </p>
+    </div>
+    <div class="about-divider"></div>
+    <div class="about-sidebar">
+      <div class="sidebar-item">
+        <div class="sidebar-icon">☁️</div>
+        <div>
+          <div class="sidebar-label">Primary Cloud</div>
+          <div class="sidebar-val">Amazon Web Services</div>
+        </div>
+      </div>
+      <div class="sidebar-item">
+        <div class="sidebar-icon">🏗️</div>
+        <div>
+          <div class="sidebar-label">IaC Philosophy</div>
+          <div class="sidebar-val">Everything as Code</div>
+        </div>
+      </div>
+      <div class="sidebar-item">
+        <div class="sidebar-icon">⚡</div>
+        <div>
+          <div class="sidebar-label">Core Focus</div>
+          <div class="sidebar-val">CI/CD Automation</div>
+        </div>
+      </div>
+      <div class="sidebar-item">
+        <div class="sidebar-icon">🌐</div>
+        <div>
+          <div class="sidebar-label">Availability</div>
+          <div class="sidebar-val">Open · Remote Friendly</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ EDUCATION ═══ -->
+  <div class="sec-head">
+    <span class="num">II.</span>
+    <h2>Education</h2>
+    <div class="rule"></div>
+  </div>
+
+  <div class="edu-section">
+    <div class="edu-list">
+
+      <div class="edu-item">
+        <div class="edu-year">2022</div>
+        <div class="edu-body">
+          <div class="edu-degree">B.S. Computer Networks &amp; Cybersecurity</div>
+          <div class="edu-school">University of Maryland Global Campus</div>
+          <div class="edu-badge">Completed</div>
+        </div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-year">2026</div>
+        <div class="edu-body">
+          <div class="edu-degree">M.S. Cloud Computing</div>
+          <div class="edu-school">University of Maryland Global Campus</div>
+          <div class="edu-badge">Completed</div>
+        </div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-year">Est.<br>Feb 2027</div>
+        <div class="edu-body">
+          <div class="edu-degree">M.S. Enterprise Technology Management</div>
+          <div class="edu-school">Southern New Hampshire University</div>
+          <div class="edu-badge">In Progress</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ TOOLCHAIN ═══ -->
+  <div class="sec-head">
+    <span class="num">III.</span>
+    <h2>Toolchain</h2>
+    <div class="rule"></div>
+  </div>
+
+  <div class="tools-section">
+    <div class="tools-mosaic">
+
+      <div class="tool-tile t-os">
+        <div class="tool-emoji">🐧</div>
+        <div class="tool-lbl">Linux</div>
+      </div>
+
+      <div class="tool-tile t-cloud">
+        <div class="tool-emoji">☁️</div>
+        <div class="tool-lbl">AWS</div>
+      </div>
+
+      <div class="tool-tile t-iac">
+        <div class="tool-emoji">🏗️</div>
+        <div class="tool-lbl">Terraform</div>
+      </div>
+
+      <div class="tool-tile t-cont">
+        <!-- Docker logo SVG -->
+        <svg class="tool-logo" viewBox="0 0 100 72" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Docker">
+          <path d="M55.7 27.3H46v9.4h9.7v-9.4zm0-10.5H46v9.5h9.7v-9.5zm-10.6 10.5h-9.7v9.4h9.7v-9.4zm0-10.5h-9.7v9.5h9.7v-9.5zm0-10.4h-9.7v9.4h9.7V6.4zm10.6 10.4H46v9.5h9.7v-9.5zm10.6 10.5H56.6v9.4h9.7v-9.4zm10.6 0H67.2v9.4h9.7v-9.4zm0-10.4H67.2v9.4h9.7v-9.4zM93.6 33c-1.4-1-4-1.4-6.1-1-0.3-2.1-1.4-4-3.4-5.5l-1.2-0.8-0.8 1.2c-1.5 2.3-1.9 6-0.4 8.5-0.7 0.4-2.2 1-4.1 0.9H2.5c-0.5 3.1 0 7.8 2.8 11.1 2.7 3.1 6.7 4.7 12.2 4.7 11.6 0 20.2-5.3 24.2-15h2.1c1.4 0 4.9-0.1 6.8-2.9h0.2s0.9 2.4 4 2.9h1.5c1.3 0 4.6-0.5 6.7-2.8l0.3 0.2z" fill="#2496ED"/>
+        </svg>
+        <div class="tool-lbl">Docker</div>
+      </div>
+
+      <div class="tool-tile t-cont">
+        <!-- Docker Desktop logo (same whale, labeled Desktop) -->
+        <svg class="tool-logo" viewBox="0 0 100 72" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Docker Desktop">
+          <path d="M55.7 27.3H46v9.4h9.7v-9.4zm0-10.5H46v9.5h9.7v-9.5zm-10.6 10.5h-9.7v9.4h9.7v-9.4zm0-10.5h-9.7v9.5h9.7v-9.5zm0-10.4h-9.7v9.4h9.7V6.4zm10.6 10.4H46v9.5h9.7v-9.5zm10.6 10.5H56.6v9.4h9.7v-9.4zm10.6 0H67.2v9.4h9.7v-9.4zm0-10.4H67.2v9.4h9.7v-9.4zM93.6 33c-1.4-1-4-1.4-6.1-1-0.3-2.1-1.4-4-3.4-5.5l-1.2-0.8-0.8 1.2c-1.5 2.3-1.9 6-0.4 8.5-0.7 0.4-2.2 1-4.1 0.9H2.5c-0.5 3.1 0 7.8 2.8 11.1 2.7 3.1 6.7 4.7 12.2 4.7 11.6 0 20.2-5.3 24.2-15h2.1c1.4 0 4.9-0.1 6.8-2.9h0.2s0.9 2.4 4 2.9h1.5c1.3 0 4.6-0.5 6.7-2.8l0.3 0.2z" fill="#086DD7"/>
+          <rect x="10" y="58" width="80" height="8" rx="3" fill="#086DD7" opacity="0.25"/>
+          <rect x="25" y="60" width="50" height="4" rx="2" fill="#086DD7" opacity="0.5"/>
+        </svg>
+        <div class="tool-lbl">Docker Desktop</div>
+      </div>
+
+      <div class="tool-tile t-cont">
+        <div class="tool-emoji">☸️</div>
+        <div class="tool-lbl">Kubernetes</div>
+      </div>
+
+      <div class="tool-tile t-cont">
+        <div class="tool-emoji">🔭</div>
+        <div class="tool-lbl">OpenLens</div>
+      </div>
+
+      <div class="tool-tile t-iac">
+        <div class="tool-emoji">⛵</div>
+        <div class="tool-lbl">Helm</div>
+      </div>
+
+      <div class="tool-tile t-ci">
+        <div class="tool-emoji">⚙️</div>
+        <div class="tool-lbl">Ansible</div>
+      </div>
+
+      <!-- ArgoCD tile with SVG logo -->
+      <div class="tool-tile t-ci">
+        <svg class="tool-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Argo CD">
+          <circle cx="50" cy="50" r="46" fill="#EF7B4D" opacity="0.15"/>
+          <circle cx="50" cy="50" r="38" fill="#EF7B4D" opacity="0.2"/>
+          <!-- Argo stylized helm/octopus mark -->
+          <circle cx="50" cy="42" r="14" fill="#EF7B4D"/>
+          <circle cx="50" cy="42" r="7" fill="white"/>
+          <!-- tentacles -->
+          <path d="M32 56 Q28 66 34 72" stroke="#EF7B4D" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <path d="M40 62 Q38 72 44 76" stroke="#EF7B4D" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <path d="M50 64 Q50 74 50 80" stroke="#EF7B4D" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <path d="M60 62 Q62 72 56 76" stroke="#EF7B4D" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <path d="M68 56 Q72 66 66 72" stroke="#EF7B4D" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <!-- face -->
+          <circle cx="44" cy="40" r="2.5" fill="#EF7B4D"/>
+          <circle cx="56" cy="40" r="2.5" fill="#EF7B4D"/>
+          <path d="M44 47 Q50 52 56 47" stroke="#EF7B4D" stroke-width="2" stroke-linecap="round" fill="none"/>
+        </svg>
+        <div class="tool-lbl">Argo CD</div>
+      </div>
+
+      <div class="tool-tile t-scm">
+        <div class="tool-emoji">🐙</div>
+        <div class="tool-lbl">GitHub</div>
+      </div>
+
+      <div class="tool-tile t-scm">
+        <div class="tool-emoji">⚡</div>
+        <div class="tool-lbl">GH Actions</div>
+      </div>
+
+      <div class="tool-tile t-qa">
+        <div class="tool-emoji">🔍</div>
+        <div class="tool-lbl">SonarQube</div>
+      </div>
+
+      <div class="tool-tile t-art">
+        <div class="tool-emoji">📦</div>
+        <div class="tool-lbl">JFrog</div>
+      </div>
+
+      <!-- Datadog tile with SVG logo -->
+      <div class="tool-tile t-obs">
+        <svg class="tool-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Datadog">
+          <!-- Datadog stylized dog mark -->
+          <rect x="18" y="30" width="64" height="44" rx="6" fill="#632CA6"/>
+          <!-- dog face simplified -->
+          <ellipse cx="50" cy="50" rx="22" ry="20" fill="#774AA4" opacity="0.6"/>
+          <!-- ears -->
+          <ellipse cx="30" cy="36" rx="10" ry="13" rx="8" fill="#632CA6" transform="rotate(-15 30 36)"/>
+          <ellipse cx="70" cy="36" rx="10" ry="13" rx="8" fill="#632CA6" transform="rotate(15 70 36)"/>
+          <!-- eyes -->
+          <circle cx="43" cy="48" r="4" fill="white"/>
+          <circle cx="57" cy="48" r="4" fill="white"/>
+          <circle cx="44" cy="49" r="2" fill="#1f1235"/>
+          <circle cx="58" cy="49" r="2" fill="#1f1235"/>
+          <!-- nose -->
+          <ellipse cx="50" cy="57" rx="5" ry="3.5" fill="#1f1235"/>
+          <!-- mouth -->
+          <path d="M44 61 Q50 66 56 61" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <!-- DD mark top left -->
+          <text x="20" y="26" font-family="Arial" font-weight="bold" font-size="12" fill="#632CA6">DD</text>
+        </svg>
+        <div class="tool-lbl">Datadog</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ PIPELINE ═══ -->
+  <div class="sec-head">
+    <span class="num">IV.</span>
+    <h2>Delivery Pipeline</h2>
+    <div class="rule"></div>
+  </div>
+
+  <div class="pipeline-section">
+    <div class="pipeline-track">
+
+      <div class="pipe-node">
+        <div class="pipe-circle">🐙</div>
+        <div class="pipe-text">
+          <div class="pipe-name">Source</div>
+          <div class="pipe-sub">GitHub<br>Branching</div>
+        </div>
+      </div>
+
+      <div class="pipe-arrow">→</div>
+
+      <div class="pipe-node">
+        <div class="pipe-circle">🔍</div>
+        <div class="pipe-text">
+          <div class="pipe-name">Quality</div>
+          <div class="pipe-sub">SonarQube<br>Code Gate</div>
+        </div>
+      </div>
+
+      <div class="pipe-arrow">→</div>
+
+      <div class="pipe-node">
+        <div class="pipe-circle">⚡</div>
+        <div class="pipe-text">
+          <div class="pipe-name">Build / CI</div>
+          <div class="pipe-sub">GH Actions<br>Pipeline</div>
+        </div>
+      </div>
+
+      <div class="pipe-arrow">→</div>
+
+      <div class="pipe-node">
+        <div class="pipe-circle">📦</div>
+        <div class="pipe-text">
+          <div class="pipe-name">Artifacts</div>
+          <div class="pipe-sub">JFrog<br>Registry</div>
+        </div>
+      </div>
+
+      <div class="pipe-arrow">→</div>
+
+      <div class="pipe-node">
+        <div class="pipe-circle">⛵</div>
+        <div class="pipe-text">
+          <div class="pipe-name">Package</div>
+          <div class="pipe-sub">Helm Charts<br>K8s Manifests</div>
+        </div>
+      </div>
+
+      <div class="pipe-arrow">→</div>
+
+      <div class="pipe-node">
+        <div class="pipe-circle">☸️</div>
+        <div class="pipe-text">
+          <div class="pipe-name">Deploy</div>
+          <div class="pipe-sub">ArgoCD<br>AWS EKS</div>
+        </div>
+      </div>
+
+      <div class="pipe-arrow">→</div>
+
+      <div class="pipe-node">
+        <div class="pipe-circle">🔭</div>
+        <div class="pipe-text">
+          <div class="pipe-name">Observe</div>
+          <div class="pipe-sub">Datadog<br>Monitoring</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ SKILLS ═══ -->
+  <div class="sec-head">
+    <span class="num">V.</span>
+    <h2>Proficiency</h2>
+    <div class="rule"></div>
+  </div>
+
+  <div class="skills-section">
+    <div class="skills-cols">
+
+      <div class="skill-entry">
+        <div class="skill-meta">
+          <span class="skill-name">Linux Administration</span>
+          <span class="skill-tag">Expert · 92%</span>
+        </div>
+        <div class="skill-track"><div class="skill-fill d1" style="width:92%"></div></div>
+      </div>
+
+      <div class="skill-entry">
+        <div class="skill-meta">
+          <span class="skill-name">AWS Cloud</span>
+          <span class="skill-tag">Advanced · 88%</span>
+        </div>
+        <div class="skill-track"><div class="skill-fill d2" style="width:88%"></div></div>
+      </div>
+
+      <div class="skill-entry">
+        <div class="skill-meta">
+          <span class="skill-name">CI/CD Pipelines</span>
+          <span class="skill-tag">Expert · 90%</span>
+        </div>
+        <div class="skill-track"><div class="skill-fill d1" style="width:90%"></div></div>
+      </div>
+
+      <div class="skill-entry">
+        <div class="skill-meta">
+          <span class="skill-name">Terraform · IaC</span>
+          <span class="skill-tag">Advanced · 84%</span>
+        </div>
+        <div class="skill-track"><div class="skill-fill d3" style="width:84%"></div></div>
+      </div>
+
+      <div class="skill-entry">
+        <div class="skill-meta">
+          <span class="skill-name">Kubernetes &amp; Docker</span>
+          <span class="skill-tag">Advanced · 85%</span>
+        </div>
+        <div class="skill-track"><div class="skill-fill d2" style="width:85%"></div></div>
+      </div>
+
+      <div class="skill-entry">
+        <div class="skill-meta">
+          <span class="skill-name">Ansible Automation</span>
+          <span class="skill-tag">Solid · 78%</span>
+        </div>
+        <div class="skill-track"><div class="skill-fill d4" style="width:78%"></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ PULL QUOTE ═══ -->
+  <div class="pull-quote">
+    <blockquote>
+      "Ship fast, recover faster — build systems that are resilient by design, not by accident."
+    </blockquote>
+    <cite>— Idriss Bakayoko, DevOps Engineer</cite>
+  </div>
+
+  <!-- ═══ CTA FOOTER ═══ -->
+  <div class="cta-footer">
+    <div class="cta-text">
+      <h3>Let's build something<br><em>remarkable</em> together.</h3>
+      <p>Open to DevOps, Platform Engineering &amp; Cloud Engineering roles</p>
+    </div>
+    <div class="cta-btns">
+      <a href="mailto:idriss.ibrahim.bakayoko@gmail.com" class="cta-btn btn-filled">✉ &nbsp;idriss.ibrahim.bakayoko@gmail.com</a>
+      <a href="tel:5857471720" class="cta-btn btn-ghost">📞 &nbsp;585 747 1720</a>
+
+    </div>
+  </div>
+
+  <!-- ═══ COLOPHON ═══ -->
+  <div class="colophon">
+    <div class="colophon-left">
+      <div class="colophon-mark"></div>
+      <span class="colophon-name">Idriss Bakayoko</span>
+    </div>
+    <div class="colophon-right">© 2026 &nbsp;·&nbsp; DevOps Engineer &nbsp;·&nbsp; All rights reserved</div>
+  </div>
+
+</div>
+</body>
+</html>
